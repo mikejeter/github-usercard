@@ -3,6 +3,8 @@
            https://api.github.com/users/<your name>
 */
 
+axios.get('https://api.github.com/users/mikejeter')
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -53,3 +55,54 @@ const followersArray = [];
   luishrd
   bigknell
 */
+
+function githubCard(cardInfo) {
+  const newCard = document.createElement('div');
+  const userImg = document.createElement('img');
+  const cardUser = document.createElement('div');
+  const uName = document.createElement('h3');
+  const usersName = document.createElement('p');
+  const uLocation = document.createElement('p');
+  const uProfile = document.createElement('p');
+  const uFollowers = document.createElement('p');
+  const uFollowing = document.createElement('p');
+  const uBio = document.createElement('p');
+
+  newCard.appendChild(userImg);
+  newCard.appendChild(cardUser);
+  newCard.appendChild(uName);
+  newCard.appendChild(usersName);
+  newCard.appendChild(uLocation);
+  newCard.appendChild(uProfile);
+  newCard.appendChild(uFollowers);
+  newCard.appendChild(uFollowing);
+  newCard.appendChild(uBio);
+
+  userImg.src = avatar_url;
+  uName.textContent = cardInfo.name;
+  usersName.textContent = cardInfo.login;
+  uLocation.textContent = cardInfo.location;
+  uProfile.textContent = cardInfo.profile;
+  uFollowers.textContent = cardInfo.followers;
+  uFollowing.textContent = cardInfo.following;
+  uBio.textContent = cardInfo.bio;
+
+  newCard.classList.add('card');
+  userImg.classList.add('img');
+  uName.classList.add('name');
+  usersName.classList.add('username');
+  uLocation.classList.add('p');
+  uProfile.classList.add('p');
+  uFollowers.classList.add('p');
+  uFollowing.classList.add('p');
+  uBio.classList.add('p');
+
+  return newCard;
+
+}
+
+const cards = document.querySelector('.cards');
+
+followersArray.forEach(data => {
+  cards.appendChild(githubCard(data));
+});
