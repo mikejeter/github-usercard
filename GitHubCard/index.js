@@ -3,8 +3,6 @@
            https://api.github.com/users/<your name>
 */
 
-axios.get('https://api.github.com/users/mikejeter')
-
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -28,6 +26,25 @@ axios.get('https://api.github.com/users/mikejeter')
 
 const followersArray = [];
 
+followersArray.push('https://api.github.com/users/' + 'mikejeter');
+followersArray.push('https://api.github.com/users/' + 'tetondan');
+followersArray.push('https://api.github.com/users/' + 'dustinmyers');
+followersArray.push('https://api.github.com/users/' + 'justsml');
+followersArray.push('https://api.github.com/users/' + 'luishrd');
+followersArray.push('https://api.github.com/users/' + 'bigknell');
+
+followersArray.forEach((element) => {
+
+  axios.get(element)
+  .then(result => {
+    const cards = document.querySelector('.cards');
+    const card = githubCard(result);
+
+    cards.appendChild(card);
+  });
+});
+
+
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
@@ -45,15 +62,6 @@ const followersArray = [];
     <p>Bio: {users bio}</p>
   </div>
 </div>
-
-*/
-
-/* List of LS Instructors Github username's: 
-  tetondan
-  dustinmyers
-  justsml
-  luishrd
-  bigknell
 */
 
 function githubCard(cardInfo) {
@@ -78,17 +86,18 @@ function githubCard(cardInfo) {
   newCard.appendChild(uFollowing);
   newCard.appendChild(uBio);
 
-  userImg.src = avatar_url;
-  uName.textContent = cardInfo.name;
-  usersName.textContent = cardInfo.login;
-  uLocation.textContent = cardInfo.location;
-  uProfile.textContent = cardInfo.profile;
-  uFollowers.textContent = cardInfo.followers;
-  uFollowing.textContent = cardInfo.following;
-  uBio.textContent = cardInfo.bio;
+  userImg.src = cardInfo.data.avatar_url;
+  uName.textContent = cardInfo.data.name;
+  usersName.textContent = cardInfo.data.login;
+  uLocation.textContent = cardInfo.data.location;
+  uProfile.innerHTML = cardInfo.data.id;
+  uFollowers.textContent = cardInfo.data.followers;
+  uFollowing.textContent = cardInfo.data.following;
+  uBio.textContent = cardInfo.data.bio;
 
   newCard.classList.add('card');
   userImg.classList.add('img');
+  cardUser.classList.add('card-info');
   uName.classList.add('name');
   usersName.classList.add('username');
   uLocation.classList.add('p');
@@ -101,8 +110,12 @@ function githubCard(cardInfo) {
 
 }
 
-const cards = document.querySelector('.cards');
+// const newCard = document.querySelector('.cards');
 
-followersArray.forEach(data => {
-  cards.appendChild(githubCard(data));
-});
+/* List of LS Instructors Github username's: 
+  tetondan
+  dustinmyers
+  justsml
+  luishrd
+  bigknell
+*/
