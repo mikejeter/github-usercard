@@ -32,6 +32,7 @@ followersArray.push('https://api.github.com/users/' + 'dustinmyers');
 followersArray.push('https://api.github.com/users/' + 'justsml');
 followersArray.push('https://api.github.com/users/' + 'luishrd');
 followersArray.push('https://api.github.com/users/' + 'bigknell');
+followersArray.push('https://api.github.com/users/' + 'Shadowborn');
 
 followersArray.forEach((element) => {
 
@@ -41,6 +42,10 @@ followersArray.forEach((element) => {
     const card = githubCard(result);
 
     cards.appendChild(card);
+  })
+
+  .catch ((err) => {
+    console.log(err);
   });
 });
 
@@ -64,7 +69,7 @@ followersArray.forEach((element) => {
 </div>
 */
 
-function githubCard(cardInfo) {
+function githubCard(users) {
   const newCard = document.createElement('div');
   const userImg = document.createElement('img');
   const cardUser = document.createElement('div');
@@ -72,28 +77,23 @@ function githubCard(cardInfo) {
   const usersName = document.createElement('p');
   const uLocation = document.createElement('p');
   const uProfile = document.createElement('p');
+  const gitAddress = document.createElement('a');
   const uFollowers = document.createElement('p');
   const uFollowing = document.createElement('p');
   const uBio = document.createElement('p');
 
+
+  
   newCard.appendChild(userImg);
   newCard.appendChild(cardUser);
   newCard.appendChild(uName);
   newCard.appendChild(usersName);
   newCard.appendChild(uLocation);
   newCard.appendChild(uProfile);
+  newCard.appendChild(gitAddress);
   newCard.appendChild(uFollowers);
   newCard.appendChild(uFollowing);
   newCard.appendChild(uBio);
-
-  userImg.src = cardInfo.data.avatar_url;
-  uName.textContent = cardInfo.data.name;
-  usersName.textContent = cardInfo.data.login;
-  uLocation.textContent = cardInfo.data.location;
-  uProfile.innerHTML = cardInfo.data.id;
-  uFollowers.textContent = cardInfo.data.followers;
-  uFollowing.textContent = cardInfo.data.following;
-  uBio.textContent = cardInfo.data.bio;
 
   newCard.classList.add('card');
   userImg.classList.add('img');
@@ -106,11 +106,19 @@ function githubCard(cardInfo) {
   uFollowing.classList.add('p');
   uBio.classList.add('p');
 
+  userImg.src = users.data.avatar_url;
+  uName.textContent = users.data.name;
+  usersName.textContent = users.data.login;
+  uLocation.textContent = users.data.location;
+  uProfile.textContent = 'GitHub Link';
+  gitAddress.href = users.data.html_url;
+  uFollowers.textContent = users.data.followers;
+  uFollowing.textContent = users.data.following;
+  uBio.textContent = users.data.bio;
+
   return newCard;
 
 }
-
-// const newCard = document.querySelector('.cards');
 
 /* List of LS Instructors Github username's: 
   tetondan
